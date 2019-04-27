@@ -1,0 +1,13 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Login
+{% endblock %}
+
+{% block body %}
+    {%for result in results%}  
+    <a href="{{ url_for('show_detail', isbn=result.isbn) }}"> {{result.title}}</a> 
+    <br>  
+    {% endfor %}
+    <a href ="{{ url_for('logout') }}"> Logout </a>
+{% endblock %}

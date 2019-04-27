@@ -1,0 +1,72 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Login
+{% endblock %}
+
+{% block body %}
+
+<!-- Result from DB user table -->
+<form action="{{ url_for('show_detail', isbn=results.isbn) }}" method="post">
+    <label> Title: </label>
+    <label>{{results.title}}</label>
+    <br>
+    <label> Author:</label>
+    <label> {{results.author}}</label>
+    <br>
+    <label> Publication Year:</label>
+    <label>{{results.pub_year}}</label>
+    <!-- End of result from DB user table -->
+
+    <!-- Result from API -->
+    <br>
+    <label>ISBN: </label>
+    {{ books['books'][0]["isbn"] }}
+    <br>
+    <label>ID: </label>
+    {{ books['books'][0]["id"] }}
+    <br>
+    <label>Count of reviews: </label>
+    {{ books['books'][0]["reviews_count"] }}
+    <br>
+    <label>Average rating: </label>
+    {{ books['books'][0]["average_rating"] }}
+    <br>
+    <!-- End of result from API    -->
+
+    <!-- Result from DB review table -->
+    <label> Reviews: </label>
+    <br>
+    {% if reviews.__len__()!=0 %}
+    {% for review in reviews %}
+    <label>S.No. </label>
+    <label>{{loop.index}} </label>
+    <br>
+    <label>Review: </label>
+    <label>{{review.review}} </label>
+    <br>
+    <label>Review By: </label>
+    <label>{{review.user_id}} </label>
+    <br>
+    {% endfor %}
+    {% else %}
+    <label> No existing reviews for the book </label>
+    <br>
+    {% endif %}
+    <!-- End of result from DB review table -->
+
+    <!-- User to leave review -->
+    {% if flag == True%}
+    <label>Choose your Rating:</label>
+    <input type ="number" placeholder ="rating" name ="rating" required min="1" max="5"></input>
+    <br>
+    <label> Leave a Review: </label>
+    <input type="text" placeholder="review" name="review" required minlength="10" maxlength="500"></input>
+    <br>
+    <br>
+    <input type="submit"></input>
+    {% endif %}
+    <!-- end of user to leave review -->
+    <a href ="{{ url_for('logout') }}"> Logout </a>
+</form>
+{% endblock %}

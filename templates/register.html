@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Register
+{% endblock %}
+
+{% block body %}
+<form action="{{ url_for('register') }}" method="post">
+    <label>Username: </label>
+    <input type="text" placeholder="name" name="name" required></input>
+    <br>
+    <label>Email Address: </label>
+    <input type="email" placeholder="email" name="email" required></input>
+    <br>
+    <label>Password: </label>
+    <input type="text" placeholder=" enter password" name="password"></input>
+    <br>
+    <button>Register</button>
+</form>
+<a href="{{ url_for('login') }}"> If you are a returning registered member, please click here to login</a>
+{% endblock %}

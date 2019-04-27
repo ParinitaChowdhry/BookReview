@@ -1,0 +1,14 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Login
+{% endblock %}
+
+{% block body %}
+    <form action="{{ url_for('search') }}" method="post">
+    <label>Book you want to search for : </label>
+    <input type="text" placeholder="enter isbn" name ="search"></input>
+    <button>Search</button>
+    <a href ="{{ url_for('logout') }}"> Logout </a>
+    </form>
+{% endblock %}
