@@ -6,7 +6,7 @@
 
 {% block body %}
     {%for result in results%}  
-    <a href="{{ url_for('show_detail', isbn=result.isbn) }}"> {{result.title}}</a> 
+    <a href="{{ url_for('show_detail', isbn=result.isbn) }}" style ="text-decoration: none;"> {{result.title}}</a> 
     <br>  
     {% endfor %}
     <a href ="{{ url_for('logout') }}"> Logout </a>

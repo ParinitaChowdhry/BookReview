@@ -57,7 +57,7 @@ def login():
             user = db.execute("SELECT * FROM users WHERE email = :email", {"email": email_form}).fetchone()
             name = user.name
             session['id'] = user.id
-            return render_template("search.html")
+            return render_template("search.html", name = name)
 
 # Render search page and results from books table
 @app.route("/search", methods = ["POST"])
@@ -82,7 +82,7 @@ def show_detail(isbn):
             result_api = requests.get("https://www.goodreads.com/book/review_counts.json", params={"key": key, "isbns": isbn})
             # display details from db
             result_db = db.execute("SELECT * FROM books WHERE isbn = :isbn",{"isbn": isbn}).fetchone()
-            review_db= db.execute("SELECT * FROM reviews WHERE book_id = :book_id",{"book_id": result_db.id}).fetchall()
+            review_db= db.execute("SELECT * FROM reviews INNER JOIN users on reviews.user_id = users.id WHERE book_id = :book_id",{"book_id": result_db.id}).fetchall()
             # check if user has already created review for that particular book
             # display the option to write a review only if flag is True 
             flag = True
@@ -113,7 +113,7 @@ def logout():
 @app.route('/api/<isbn>')
 def api(isbn):
     # get results from API when you provide isbn of particular book
-    result_api = requests.get("https://www.goodreads.com/book/review_counts.json", params={"key": key, "isbns": isbn})
+     result_api = requests.get("https://www.goodreads.com/book/review_counts.json", params={"key": key, "isbns": isbn})
     if result_api.status_code != 200:
         return jsonify({"error": "Not found"}), 404
         # display details from db
