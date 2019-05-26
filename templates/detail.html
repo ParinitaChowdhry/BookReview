@@ -7,6 +7,10 @@ Login
 {% block body %}
 
 <!-- Result from DB user table -->
+<div class="float-right">
+    <a class="btn btn-primary" href ="{{ url_for('logout') }}" role="button"> Logout </a>
+</div>
+
 <form action="{{ url_for('show_detail', isbn=results.isbn) }}" method="post">
     <label> Title: </label>
     <label>{{results.title}}</label>
@@ -64,9 +68,8 @@ Login
     <input type="text" placeholder="review" name="review" required minlength="10" maxlength="500"></input>
     <br>
     <br>
-    <input type="submit"></input>
+    <button class="btn btn-primary">Submit Review</button>
     {% endif %}
     <!-- end of user to leave review -->
-    <a href ="{{ url_for('logout') }}"> Logout </a>
 </form>
 {% endblock %}

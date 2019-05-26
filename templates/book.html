@@ -5,9 +5,14 @@
 {% endblock %}
 
 {% block body %}
-    {%for result in results%}  
-    <a href="{{ url_for('show_detail', isbn=result.isbn) }}" style ="text-decoration: none;"> {{result.title}}</a> 
-    <br>  
+    <div class="float-right">
+    <a class="btn btn-primary" href ="{{ url_for('logout') }}" role="button"> Logout </a>
+    </div>
+    <div class="row">
+    {%for result in results%} 
+        <div class="col-4">
+        <a href="{{ url_for('show_detail', isbn=result.isbn) }}" style ="text-decoration: none; color: black;"> {{result.title}}</a> 
+        </div>
     {% endfor %}
-    <a href ="{{ url_for('logout') }}"> Logout </a>
+    </div>
 {% endblock %}
