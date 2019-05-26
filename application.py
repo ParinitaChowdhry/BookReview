@@ -55,9 +55,9 @@ def login():
             if user.password!= password_form :
                 return render_template("error.html", message=" Something went wrong with your credentials. ")
             user = db.execute("SELECT * FROM users WHERE email = :email", {"email": email_form}).fetchone()
-            name = user.name
+            session['name'] = user.name
             session['id'] = user.id
-            return render_template("search.html", name = name)
+            return render_template("search.html", name = session['name'])
 
 # Render search page and results from books table
 @app.route("/search", methods = ["POST"])
@@ -98,7 +98,7 @@ def show_detail(isbn):
             db.execute("INSERT INTO reviews (user_id, book_id, rating, review) VALUES (:user_id, :book_id, :rating, :review)",
             {"user_id": session.get('id'), "book_id": book_id, "rating": rating_form, "review": review_form})
             db.commit()
-            return render_template("search.html")
+            return render_template("search.html", name = session['name'])
     return render_template("login.html")
 
 @app.route('/logout', methods = ["GET"])
@@ -113,7 +113,7 @@ def logout():
 @app.route('/api/<isbn>')
 def api(isbn):
     # get results from API when you provide isbn of particular book
-     result_api = requests.get("https://www.goodreads.com/book/review_counts.json", params={"key": key, "isbns": isbn})
+    result_api = requests.get("https://www.goodreads.com/book/review_counts.json", params={"key": key, "isbns": isbn})
     if result_api.status_code != 200:
         return jsonify({"error": "Not found"}), 404
         # display details from db
